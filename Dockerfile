@@ -12,10 +12,13 @@ RUN apt-get update && \
         tzdata \
         gfortran \
         gcc \
+        clang-6.0 \
         openssh-client \
         openssh-server \
         cmake \
         build-essential \
+        python-dev \
+        libxml2-dev \
         rsync &&\
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
