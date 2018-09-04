@@ -15,6 +15,7 @@ RUN apt-get update && \
         openssh-client \
         openssh-server \
         cmake \
+        build-essential \
         rsync &&\
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
