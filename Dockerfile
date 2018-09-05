@@ -19,8 +19,19 @@ RUN apt-get update && \
         build-essential \
         python-dev \
         libxml2-dev \
-        rsync &&\
-    apt-get clean && \
+        libapparmor1 \
+        libedit2 \
+        lsb-release \
+        psmisc \
+        rsync 
+
+ENV RSTUDIO_PKG=rstudio-server-1.0.136-amd64.deb
+
+RUN wget -q http://download2.rstudio.org/${RSTUDIO_PKG}
+RUN dpkg -i ${RSTUDIO_PKG}
+RUN rm ${RSTUDIO_PKG}
+
+RUN apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 USER $NB_UID
@@ -45,6 +56,7 @@ RUN conda install --quiet --yes \
     'r-htmltools=0.3*' \
     'r-sparklyr=0.7*' \
     'r-htmlwidgets=1.0*' \
+    'rstudio' \
     'r-hexbin=1.27*' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
@@ -91,6 +103,20 @@ RUN conda install --quiet --yes \
     rm -rf /home/$NB_USER/.node-gyp && \
     fix-permissions $CONDA_DIR && \
     fix-permissions /home/$NB_USER
+
+
+RUN pip install git+https://github.com/jupyterhub/nbrsessionproxy.git
+RUN jupyter serverextension enable --sys-prefix --py nbrsessionproxy
+RUN jupyter nbextension install    --sys-prefix --py nbrsessionproxy
+RUN jupyter nbextension enable --sys-prefix --py nbrsessionproxy
+
+# RUN git clone https://github.com/jupyterhub/nbserverproxy /home/jovyan/.jupyter/nbrsessionproxy 
+# RUN    pip install -e /home/jovyan/.jupyter/nbrsessionproxy 
+# RUN        jupyter labextension link --debug /home/jovyan/.jupyter/nbrsessionproxy/jupyterlab-rsessionproxy
+
+# The desktop package uses /usr/lib/rstudio/bin
+ENV PATH="${PATH}:/usr/lib/rstudio-server/bin"
+ENV LD_LIBRARY_PATH="/usr/lib/R/lib:/lib:/usr/lib/x86_64-linux-gnu:/usr/lib/jvm/java-7-openjdk-amd64/jre/lib/amd64/server:/opt/conda/lib/R/lib"
 
 # Install facets which does not have a pip or conda package at the moment
 RUN cd /tmp && \
