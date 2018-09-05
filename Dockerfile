@@ -38,7 +38,7 @@ USER $NB_UID
 
 # R packages
 RUN conda install --quiet --yes \
-    'r-base=3.5.1' \
+    'r-base=3.5.0' \
     'rstudio' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
