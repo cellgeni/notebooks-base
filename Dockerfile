@@ -39,25 +39,7 @@ USER $NB_UID
 # R packages
 RUN conda install --quiet --yes \
     'r-base=3.5.1' \
-    'r-irkernel' \
-    'r-plyr' \
-    'r-devtools' \
-    'r-tidyverse' \
-    'r-shiny' \
-    'r-rmarkdown' \
-    'r-forecast' \
-    'r-rsqlite' \
-    'r-reshape2' \
-    'r-nycflights13' \
-    'r-caret' \
-    'r-rcurl' \
-    'r-crayon' \
-    'r-randomforest' \
-    'r-htmltools' \
-    'r-sparklyr' \
-    'r-htmlwidgets' \
-    'rstudio' \
-    'r-hexbin' && \
+    'rstudio' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
 
