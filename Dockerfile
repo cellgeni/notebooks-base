@@ -39,6 +39,17 @@ USER $NB_UID
 # R packages
 RUN conda install --quiet --yes \
     'r-base=3.5.0' \
+    'r-irkernel' \
+    'r-plyr' \
+    'r-devtools' \
+    'r-ggplot2' \
+    'r-tidyverse' \
+    'r-shiny' \
+    'r-rmarkdown' \
+    'r-rsqlite' \
+    'r-reshape2' \
+    'r-rcurl' \
+    'r-sparklyr' \
     'rstudio' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
