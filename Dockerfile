@@ -40,7 +40,7 @@ USER $NB_UID
 
 # R packages
 RUN conda install --quiet --yes \
-    'r-base=3.5.0' \
+    'r-base=3.4.1' \
     'r-irkernel' \
     'r-plyr' \
     'r-devtools' \
@@ -52,7 +52,7 @@ RUN conda install --quiet --yes \
     'r-reshape2' \
     'r-rcurl' \
     'r-sparklyr' \
-    'bioconda::r-seurat' \
+    'bioconda::r-seurat=2.3.4' \
     'bioconda::bioconductor-sc3' \
     'bioconda::bioconductor-scater' \
     'libssh2' \
