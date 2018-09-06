@@ -52,6 +52,9 @@ RUN conda install --quiet --yes \
     'r-reshape2' \
     'r-rcurl' \
     'r-sparklyr' \
+    'bioconda::r-seurat' \
+    'bioconda::bioconductor-sc3' \
+    'bioconda::bioconductor-scater' \
     'libssh2' \
     'krb5' \
     'rstudio' && \
