@@ -52,6 +52,8 @@ RUN conda install --quiet --yes \
     'r-reshape2' \
     'r-rcurl' \
     'r-sparklyr' \
+    'libssh2' \
+    'krb5' \
     'rstudio' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
