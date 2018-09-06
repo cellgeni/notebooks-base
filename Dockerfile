@@ -18,6 +18,8 @@ RUN apt-get update && \
         cmake \
         build-essential \
         python-dev \
+        libssl-dev \
+        libcurl4-openssl-dev \
         libxml2-dev \
         libapparmor1 \
         libedit2 \
