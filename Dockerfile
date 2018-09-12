@@ -43,9 +43,25 @@ RUN conda install --quiet --yes \
     'r-base=3.4.1' \
     'r-irkernel' \
     'r-plyr' \
+    'r-dplyr' \
+    'bioconda::r-readr' \
+    'conda-forge::r-igraph' \
+    'r-car' \
     'r-devtools' \
+    'r-rJava' \
     'r-ggplot2' \
+    'r-gplots' \
+    'conda-forger-cowplot' \
+    'conda-forge::r-ggforce' \
+    'bioconda::r-ggrepel' \
+    'conda-forge::r-ggridges' \
+    'bioconda::r-ggthemes' \
+    'conda-forge::r-ggpubr' \
+    'r-viridis' \
+    'bioconda::r-pheatmap' \
     'r-tidyverse' \
+    'r-tidyr' \
+    'r-reticulate' \
     'r-shiny' \
     'r-rmarkdown' \
     'r-rsqlite' \
@@ -55,8 +71,27 @@ RUN conda install --quiet --yes \
     'bioconda::r-seurat=2.3.4' \
     'bioconda::bioconductor-sc3' \
     'bioconda::bioconductor-scater' \
-    'libssh2' \
-    'krb5' \
+    'bioconda::bioconductor-scran' \
+    'bioconda::bioconductor-SingleCellExperiment' \
+    'bioconda::bioconductor-scmap' \
+    'bioconda::bioconductor-biomaRt' \
+    'bioconda::bioconductor-edgeR' \
+    'bioconda::bioconductor-limma' \
+    'bioconda::bioconductor-org.hs.eg.db' \
+    'bioconda::bioconductor-goseq' \
+    'bioconda::bioconductor-DESeq2' \
+    'bioconda::bioconductor-BiocParallel' \
+    'bioconda::bioconductor-monocle' \
+    'bioconda::bioconductor-destiny' \
+    'bioconda::bioconductor-pcaMethods' \
+    'bioconda::bioconductor-zinbwave' \
+    'bioconda::bioconductor-GenomicAlignments' \
+    'bioconda::bioconductor-RSAMtools' \
+    'bioconda::bioconductor-M3Drop' \
+    'bioconda::bioconductor-DropletUtils' \
+    'bioconda::bioconductor-switchde' \
+    'bioconda::r-vcfr' \
+    'bioconda::r-gprofiler' \
     'rstudio' && \
     conda clean -tipsy && \
     fix-permissions $CONDA_DIR
