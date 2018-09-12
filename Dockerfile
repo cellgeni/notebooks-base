@@ -51,11 +51,11 @@ RUN conda install --quiet --yes \
     'r-rJava' \
     'r-ggplot2' \
     'r-gplots' \
-    'conda-forger-cowplot' \
+    'conda-forge::r-cowplot' \
     'conda-forge::r-ggforce' \
     'bioconda::r-ggrepel' \
     'conda-forge::r-ggridges' \
-    'bioconda::r-ggthemes' \
+    'bioconda/label/broken::r-ggthemes' \
     'conda-forge::r-ggpubr' \
     'r-viridis' \
     'bioconda::r-pheatmap' \
@@ -73,7 +73,6 @@ RUN conda install --quiet --yes \
     'bioconda::bioconductor-scater' \
     'bioconda::bioconductor-scran' \
     'bioconda::bioconductor-SingleCellExperiment' \
-    'bioconda::bioconductor-scmap' \
     'bioconda::bioconductor-biomaRt' \
     'bioconda::bioconductor-edgeR' \
     'bioconda::bioconductor-limma' \
@@ -82,13 +81,12 @@ RUN conda install --quiet --yes \
     'bioconda::bioconductor-DESeq2' \
     'bioconda::bioconductor-BiocParallel' \
     'bioconda::bioconductor-monocle' \
-    'bioconda::bioconductor-destiny' \
+    'fakechek::bioconductor-destiny' \
     'bioconda::bioconductor-pcaMethods' \
     'bioconda::bioconductor-zinbwave' \
     'bioconda::bioconductor-GenomicAlignments' \
     'bioconda::bioconductor-RSAMtools' \
     'bioconda::bioconductor-M3Drop' \
-    'bioconda::bioconductor-DropletUtils' \
     'bioconda::bioconductor-switchde' \
     'bioconda::r-vcfr' \
     'bioconda::r-gprofiler' \
