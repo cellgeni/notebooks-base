@@ -88,7 +88,7 @@ RUN conda install --quiet --yes \
     'bioconda::bioconductor-RSAMtools' \
     'bioconda::bioconductor-M3Drop' \
     'bioconda::bioconductor-switchde' \
-    'bioconda::r-vcfr' \
+    # 'bioconda::r-vcfr' \
     'bioconda::r-gprofiler' \
     'rstudio' && \
     conda clean -tipsy && \
