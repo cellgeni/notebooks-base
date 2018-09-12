@@ -83,7 +83,7 @@ RUN conda install --quiet --yes \
     'bioconda::bioconductor-monocle' \
     'fakechek::bioconductor-destiny' \
     'bioconda::bioconductor-pcaMethods' \
-    'bioconda::bioconductor-zinbwave' \
+    # 'bioconda::bioconductor-zinbwave' \
     'bioconda::bioconductor-GenomicAlignments' \
     'bioconda::bioconductor-RSAMtools' \
     'bioconda::bioconductor-M3Drop' \
