@@ -58,7 +58,7 @@ RUN conda install --quiet --yes \
     'bioconda/label/broken::r-ggthemes' \
     'conda-forge::r-ggpubr' \
     'r-viridis' \
-    'bioconda::r-pheatmap' \
+    # 'bioconda::r-pheatmap' \
     'r-tidyverse' \
     'r-tidyr' \
     'r-reticulate' \
