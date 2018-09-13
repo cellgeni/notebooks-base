@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     gnupg2 \
     fonts-dejavu \
     tzdata \
-    gfortran \
+    gfortran-4.8 \
     gcc \
     clang-6.0 \
     openssh-client \
@@ -20,6 +20,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     python-dev \
     libssl-dev \
     libcurl4-openssl-dev \
+    libxml2 \
     libxml2-dev \
     libapparmor1 \
     libedit2 \
@@ -53,6 +54,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sudo tee -a /etc/apt/sources.list
 # https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5
 RUN add-apt-repository ppa:marutter/c2d4u3.5
+
+# Install CRAN binaries from ubuntu
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-base \
     r-cran-devtools \
@@ -126,6 +129,9 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN echo 'install.packages(c("tidyR", "Seurat", "vcfR", "rJava", "gProfileR"))' > /opt/packages1.r && Rscript /opt/packages1.r
+# Install hdf5r for Seurat
+#RUN echo 'install.packages("hdf5r",configure.args="--with-hdf5=/software/team170/bin/h5cc")' > /opt/packages1.r
+# Install other CRAN
+#RUN echo 'install.packages(c("tidyR", "Seurat", "vcfR", "rJava", "gProfileR"))' >> /opt/packages1.r && Rscript /opt/packages1.r
 
 USER $NB_UID
