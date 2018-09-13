@@ -48,6 +48,7 @@ RUN sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 # https://cran.r-project.org/bin/linux/ubuntu/README.html
 RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sudo tee -a /etc/apt/sources.list
 # https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5
+RUN apt-get install software-properties-common python-software-properties
 RUN add-apt-repository ppa:marutter/c2d4u3.5
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-base \
