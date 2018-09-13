@@ -5,6 +5,7 @@ USER root
 
 # pre-requisites
 RUN apt-get update && apt-get install -yq --no-install-recommends \
+    python3-software-properties \
     software-properties-common \
     gnupg2 \
     fonts-dejavu \
@@ -55,7 +56,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-cran-curl \
     r-cran-openssl \
     r-cran-httr \
-    ggplot2 \
+    r-cran-devtools \
+    r-cran-ggplot2 \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
