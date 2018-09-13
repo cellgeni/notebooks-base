@@ -7,6 +7,7 @@ USER root
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     python3-software-properties \
     software-properties-common \
+    apt-utils \
     gnupg2 \
     fonts-dejavu \
     tzdata \
@@ -53,11 +54,30 @@ RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sud
 RUN add-apt-repository ppa:marutter/c2d4u3.5
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-base \
-    r-cran-curl \
-    r-cran-openssl \
-    r-cran-httr \
     r-cran-devtools \
+    r-cran-tidyverse \
+    r-cran-tidyR \
+    r-cran-pheatmap \
+    r-cran-plyr \
+    r-cran-dplyr \
+    r-cran-readr \
+    r-cran-reshape2 \
+    r-cran-reticulate \
+    r-cran-viridis \
+    r-cran-Seurat \
     r-cran-ggplot2 \
+    r-cran-ggthemes \
+    r-cran-cowplot \
+    r-cran-ggforce \
+    r-cran-ggridges \
+    r-cran-ggrepel \
+    r-cran-gplots \
+    r-cran-vcfR \
+    r-cran-igraph \
+    r-cran-car \
+    r-cran-ggpubr \
+    r-cran-rJava \
+    r-cran-gProfileR \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
