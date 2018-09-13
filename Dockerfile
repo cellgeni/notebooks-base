@@ -5,6 +5,7 @@ USER root
 
 # pre-requisites
 RUN apt-get update && apt-get install -yq --no-install-recommends \
+    gnupg2 \
     fonts-dejavu \
     tzdata \
     gfortran \
