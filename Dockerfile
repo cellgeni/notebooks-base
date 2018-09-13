@@ -23,6 +23,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libxml2-dev \
     libapparmor1 \
     libedit2 \
+    libhdf5-dev \
     lsb-release \
     psmisc \
     rsync \
@@ -56,7 +57,6 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-base \
     r-cran-devtools \
     r-cran-tidyverse \
-    r-cran-tidyR \
     r-cran-pheatmap \
     r-cran-plyr \
     r-cran-dplyr \
@@ -64,7 +64,6 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-cran-reshape2 \
     r-cran-reticulate \
     r-cran-viridis \
-    r-cran-Seurat \
     r-cran-ggplot2 \
     r-cran-ggthemes \
     r-cran-cowplot \
@@ -72,13 +71,12 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-cran-ggridges \
     r-cran-ggrepel \
     r-cran-gplots \
-    r-cran-vcfR \
     r-cran-igraph \
     r-cran-car \
     r-cran-ggpubr \
-    r-cran-rJava \
-    r-cran-gProfileR \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+RUN echo 'install.packages(c("tidyR", "Seurat", "vcfR", "rJava", "gProfileR"))' > /opt/packages1.r && Rscript /opt/packages1.r
 
 USER $NB_UID
