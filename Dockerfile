@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     psmisc \
     rsync \
     vim \
+    default-jdk \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -54,11 +55,8 @@ RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
 RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sudo tee -a /etc/apt/sources.list
 # https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5
 RUN add-apt-repository ppa:marutter/c2d4u3.5
-# for Java/rJava
-RUN add-apt-repository ppa:webupd8team/java
 # Install CRAN binaries from ubuntu
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-    oracle-java9-installer \
     r-base \
     r-cran-devtools \
     r-cran-tidyverse \
