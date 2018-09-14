@@ -32,6 +32,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     default-jdk \
     libbz2-dev \
     libpcre3-dev \
+    liblzma-dev \
+    zlib1g-dev \
     xz-utils \
     liblapack-dev \
     libopenblas-dev \
