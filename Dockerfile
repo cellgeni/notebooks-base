@@ -130,8 +130,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 # Install hdf5r for Seurat
-RUN echo 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5cc")' > /opt/packages1.r && Rscript /opt/packages1.r
+RUN echo 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5cc")' > /opt/packages1.r
 # Install other CRAN
-#RUN echo 'install.packages(c("tidyR", "Seurat", "vcfR", "rJava", "gProfileR"))' >> /opt/packages1.r && Rscript /opt/packages1.r
+RUN echo 'install.packages(c("tidyR", "Seurat", "vcfR", "rJava", "gProfileR"))' >> /opt/packages1.r && Rscript /opt/packages1.r
 
 USER $NB_UID
