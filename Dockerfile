@@ -37,8 +37,13 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     xz-utils \
     liblapack-dev \
     libopenblas-dev \
+    libigraph0-dev \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Install scanpy
+RUN pip install scanpy python-igraph louvain
+RUN pip install --editable=git+https://github.com/DmitryUlyanov/Multicore-TSNE.git#egg=MulticoreTSNE
 
 # RStudio
 ENV RSTUDIO_PKG=rstudio-server-1.1.456-amd64.deb
@@ -147,9 +152,5 @@ RUN echo 'source("https://bioconductor.org/biocLite.R")' > /opt/bioconductor.r &
     echo 'biocLite()' >> /opt/bioconductor.r && \
     echo 'biocLite(c("pcaMethods", "limma", "SingleCellExperiment", "Rhdf5lib", "beachmat", "scater", "scran", "RUVSeq", "sva", "SC3", "TSCAN", "monocle", "destiny", "DESeq2", "edgeR", "MAST", "scfind", "scmap", "BiocParallel", "zinbwave", "GenomicAlignments", "RSAMtools", "M3Drop", "DropletUtils", "switchde", "biomaRt", "org.Hs.eg.db", "goseq"))' >> /opt/bioconductor.r && \
     Rscript /opt/bioconductor.r
-
-# Install scanpy
-RUN pip install scanpy python-igraph louvain
-RUN pip install --editable=git+https://github.com/DmitryUlyanov/Multicore-TSNE.git#egg=MulticoreTSNE
 
 USER $NB_UID
