@@ -11,7 +11,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     gnupg2 \
     fonts-dejavu \
     tzdata \
-    gfortran-4.8 \
+    gfortran \
     gcc \
     clang-6.0 \
     openssh-client \
@@ -30,6 +30,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     rsync \
     vim \
     default-jdk \
+    libbz2-dev \
+    libpcre3-dev \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -126,12 +128,13 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-cran-png \
     r-cran-foreach \
     r-cran-vegan \
+    r-cran-tidyr \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # Install hdf5r for Seurat
-RUN echo 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5cc")' > /opt/packages1.r
+RUN Rscript -e 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5cc")'
 # Install other CRAN
-RUN echo 'install.packages(c("tidyR", "Seurat", "vcfR", "rJava", "gProfileR"))' >> /opt/packages1.r && Rscript /opt/packages1.r
+RUN Rscript -e 'install.packages(c("Seurat", "vcfR", "rJava", "gProfileR"))'
 
 USER $NB_UID
