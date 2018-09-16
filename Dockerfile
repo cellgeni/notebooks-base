@@ -45,6 +45,14 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 RUN pip install scanpy python-igraph louvain
 RUN pip install --editable=git+https://github.com/DmitryUlyanov/Multicore-TSNE.git#egg=MulticoreTSNE
 
+# Install other python packages
+# bbknn
+RUN pip install bbknn
+# scanorama
+RUN git clone https://github.com/brianhie/scanorama.git
+RUN cd scanorama/
+RUN python setup.py install --user
+
 # RStudio
 ENV RSTUDIO_PKG=rstudio-server-1.1.456-amd64.deb
 RUN wget -q http://download2.rstudio.org/${RSTUDIO_PKG}
@@ -178,8 +186,6 @@ RUN mkdir /etc/julia && \
     chown $NB_USER $JULIA_PKGDIR && \
     fix-permissions $JULIA_PKGDIR
 
-USER $NB_UID
-
 # Add Julia packages. Only add HDF5 if this is not a test-only build since
 # it takes roughly half the entire build time of all of the images on Travis
 # to add this one package and often causes Travis to timeout.
@@ -192,6 +198,8 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     julia -e 'import Pkg; Pkg.add("Gadfly")' && \
     julia -e 'import Pkg; Pkg.add("RDatasets")' && \
     julia -e 'import Pkg; Pkg.add("IJulia")' && \
+    julia -e 'import Pkg; Pkg.add("Distances")' && \
+    julia -e 'import Pkg; Pkg.add("StatsBase")' && \
     # Precompile Julia packages \
     julia -e 'using IJulia' && \
     # move kernelspec out of home \
@@ -199,4 +207,5 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
     rm -rf $HOME/.local && \
     fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
-    
+
+USER $NB_UID
