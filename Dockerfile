@@ -50,8 +50,8 @@ RUN pip install --editable=git+https://github.com/DmitryUlyanov/Multicore-TSNE.g
 RUN pip install bbknn
 # scanorama
 RUN git clone https://github.com/brianhie/scanorama.git
-RUN cd scanorama/
-RUN python setup.py install --user
+RUN cd scanorama/ && python setup.py install --user
+RUN 
 
 # RStudio
 ENV RSTUDIO_PKG=rstudio-server-1.1.456-amd64.deb
