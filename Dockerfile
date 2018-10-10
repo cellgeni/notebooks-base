@@ -42,18 +42,6 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install scanpy
-RUN pip install scanpy python-igraph louvain
-RUN pip install --editable=git+https://github.com/DmitryUlyanov/Multicore-TSNE.git#egg=MulticoreTSNE
-
-# Install other python packages
-# bbknn
-RUN pip install bbknn
-RUN pip install rpy2
-# scanorama
-RUN git clone https://github.com/brianhie/scanorama.git
-RUN cd scanorama/ && python setup.py install --user
-
 # RStudio
 ENV RSTUDIO_PKG=rstudio-server-1.1.456-amd64.deb
 RUN wget -q http://download2.rstudio.org/${RSTUDIO_PKG}
@@ -165,6 +153,18 @@ RUN echo 'source("https://bioconductor.org/biocLite.R")' > /opt/bioconductor.r &
 # create local R library
 RUN Rscript -e 'dir.create(path = Sys.getenv("R_LIBS_USER"), showWarnings = FALSE, recursive = TRUE)'
 RUN Rscript -e '.libPaths( c( Sys.getenv("R_LIBS_USER"), .libPaths() ) )'
+
+# Install scanpy
+RUN pip install scanpy python-igraph louvain
+RUN pip install --editable=git+https://github.com/DmitryUlyanov/Multicore-TSNE.git#egg=MulticoreTSNE
+
+# Install other python packages
+# bbknn
+RUN pip install bbknn
+RUN pip install rpy2
+# scanorama
+RUN git clone https://github.com/brianhie/scanorama.git
+RUN cd scanorama/ && python setup.py install --user
 
 # Julia dependencies
 # install Julia packages in /opt/julia instead of $HOME
