@@ -38,6 +38,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     liblapack-dev \
     libopenblas-dev \
     libigraph0-dev \
+    libreadline-dev \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -48,6 +49,7 @@ RUN pip install --editable=git+https://github.com/DmitryUlyanov/Multicore-TSNE.g
 # Install other python packages
 # bbknn
 RUN pip install bbknn
+RUN pip install rpy2
 # scanorama
 RUN git clone https://github.com/brianhie/scanorama.git
 RUN cd scanorama/ && python setup.py install --user
