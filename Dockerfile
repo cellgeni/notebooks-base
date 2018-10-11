@@ -162,6 +162,7 @@ RUN pip install --editable=git+https://github.com/DmitryUlyanov/Multicore-TSNE.g
 # bbknn
 RUN pip install bbknn
 RUN pip install rpy2
+RUN pip install tzlocal
 # scanorama
 RUN git clone https://github.com/brianhie/scanorama.git
 RUN cd scanorama/ && python setup.py install --user
