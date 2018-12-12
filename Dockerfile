@@ -167,6 +167,9 @@ RUN pip install tzlocal
 RUN git clone https://github.com/brianhie/scanorama.git
 RUN cd scanorama/ && python setup.py install --user
 
+# necessary for creating user environments
+RUN conda install --quiet --yes nb_conda_kernels
+
 # Julia dependencies
 # install Julia packages in /opt/julia instead of $HOME
 ENV JULIA_PKGDIR=/opt/julia
