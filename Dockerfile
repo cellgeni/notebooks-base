@@ -156,7 +156,6 @@ RUN Rscript -e '.libPaths( c( Sys.getenv("R_LIBS_USER"), .libPaths() ) )'
 
 # Install scanpy
 RUN pip install scanpy python-igraph louvain
-RUN pip install --editable=git+https://github.com/DmitryUlyanov/Multicore-TSNE.git#egg=MulticoreTSNE
 
 # Install other python packages
 # bbknn
