@@ -190,6 +190,8 @@ RUN mkdir /etc/julia && \
     chown $NB_USER $JULIA_PKGDIR && \
     fix-permissions $JULIA_PKGDIR
 
+USER $NB_UID
+
 # Add Julia packages. Only add HDF5 if this is not a test-only build since
 # it takes roughly half the entire build time of all of the images on Travis
 # to add this one package and often causes Travis to timeout.
@@ -204,6 +206,14 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     julia -e 'import Pkg; Pkg.add("IJulia")' && \
     julia -e 'import Pkg; Pkg.add("Distances")' && \
     julia -e 'import Pkg; Pkg.add("StatsBase")' && \
+    julia -e 'import Pkg; Pkg.add("Hadamard")' && \
+    julia -e 'import Pkg; Pkg.add("JLD")' && \
+    julia -e 'import Pkg; Pkg.add("StatsBase")' && \
+    julia -e 'import Pkg; Pkg.add("Statistics")' && \
+    julia -e 'import Pkg; Pkg.add("Embeddings")' && \
+    julia -e 'import Pkg; Pkg.add("DataFrames")' && \
+    julia -e 'import Pkg; Pkg.add("GLM")' && \
+    julia -e 'import Pkg; Pkg.add("LsqFit")' && \
     # Precompile Julia packages \
     julia -e 'using IJulia' && \
     # move kernelspec out of home \
@@ -211,5 +221,3 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
     rm -rf $HOME/.local && \
     fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
-
-USER $NB_UID
