@@ -12,6 +12,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     fonts-dejavu \
     tzdata \
     gfortran \
+    curl \
     gcc \
     clang-6.0 \
     openssh-client \
