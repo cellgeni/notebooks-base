@@ -223,5 +223,8 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     # move kernelspec out of home \
     mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
-    rm -rf $HOME/.local && \
-    fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
+    rm -rf $HOME/.local
+
+USER root
+
+RUN fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
