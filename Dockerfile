@@ -191,6 +191,11 @@ RUN mkdir /etc/julia && \
 
 USER $NB_UID
 
+# Fix permissions
+RUN conda clean -tipsy && \
+    fix-permissions $CONDA_DIR && \
+    fix-permissions /home/$NB_USER
+
 # Add Julia packages. Only add HDF5 if this is not a test-only build since
 # it takes roughly half the entire build time of all of the images on Travis
 # to add this one package and often causes Travis to timeout.
