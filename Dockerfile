@@ -160,6 +160,8 @@ RUN pip install scanpy python-igraph louvain
 RUN pip install bbknn
 RUN pip install rpy2
 RUN pip install tzlocal
+# scvelo
+RUN pip install scvelo
 # scanorama
 RUN git clone https://github.com/brianhie/scanorama.git
 RUN cd scanorama/ && python setup.py install --user
@@ -219,12 +221,13 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     julia -e 'import Pkg; Pkg.add("GLM")' && \
     julia -e 'import Pkg; Pkg.add("LsqFit")' && \
     # Precompile Julia packages \
-    julia -e 'using IJulia' && \
-    # move kernelspec out of home \
-    mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
-    chmod -R go+rx $CONDA_DIR/share/jupyter && \
-    rm -rf $HOME/.local
+    julia -e 'using IJulia'
+
 
 USER root
 
-RUN fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
+# move kernelspec out of home
+RUN mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
+    chmod -R go+rx $CONDA_DIR/share/jupyter && \
+    rm -rf $HOME/.local && \
+    fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
