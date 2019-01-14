@@ -44,7 +44,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     rm -rf /var/lib/apt/lists/*
 
 # RStudio
-ENV RSTUDIO_PKG=rstudio-server-1.1.463-amd64.deb
+ENV RSTUDIO_PKG=rstudio-server-1.1.456-amd64.deb
 RUN wget -q http://download2.rstudio.org/${RSTUDIO_PKG}
 RUN dpkg -i ${RSTUDIO_PKG}
 RUN rm ${RSTUDIO_PKG}
