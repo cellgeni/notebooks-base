@@ -224,6 +224,7 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     julia -e 'import Pkg; Pkg.add("DataFrames")' && \
     julia -e 'import Pkg; Pkg.add("GLM")' && \
     julia -e 'import Pkg; Pkg.add("LsqFit")' && \
+    julia -e 'import Pkg; Pkg.add("Combinatorics")' \
     # Precompile Julia packages \
     julia -e 'using IJulia'
 
