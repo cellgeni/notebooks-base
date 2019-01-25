@@ -37,7 +37,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     zlib1g-dev \
     xz-utils \
     liblapack-dev \
-    libopenblas-dev \
+    libblas-dev \
     libigraph0-dev \
     libreadline-dev \
     && apt-get clean && \
