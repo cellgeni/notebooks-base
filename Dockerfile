@@ -19,6 +19,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     openssh-server \
     cmake \
     python-dev \
+    libgsl-dev \
     libssl-dev \
     libcurl4-openssl-dev \
     libxml2 \
