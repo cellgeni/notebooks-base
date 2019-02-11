@@ -13,6 +13,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     tzdata \
     gfortran \
     curl \
+    less \
     gcc \
     clang-6.0 \
     openssh-client \
@@ -41,8 +42,14 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libopenblas-dev \
     libigraph0-dev \
     libreadline-dev \
+    libblas-dev \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Select the right versio of libblas to be used
+# there was a problem running R in python and vice versa
+RUN pip install simplegeneric
+RUN update-alternatives --install /etc/alternatives/libblas.so.3-x86_64-linux-gnu libblas /usr/lib/x86_64-linux-gnu/blas/libblas.so.3 5
 
 # RStudio
 ENV RSTUDIO_PKG=rstudio-server-1.1.456-amd64.deb
@@ -136,6 +143,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-cran-foreach \
     r-cran-vegan \
     r-cran-tidyr \
+    r-cran-withr \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -153,6 +161,12 @@ RUN echo 'source("https://bioconductor.org/biocLite.R")' > /opt/bioconductor.r &
 # Install Vennerable for Venn diagrams
 RUN Rscript -e 'install.packages("Vennerable", repos="http://R-Forge.R-project.org")'
 
+# install github packages
+# see here for with_libpaths description:
+# https://stackoverflow.com/questions/24646065/how-to-specify-lib-directory-when-installing-development-version-r-packages-from
+# (do not install anything in the home directory, it will be wiped out when a volume is mounted to the docker container)
+RUN Rscript -e 'withr::with_libpaths(new = "/usr/lib/R/site-library/", devtools::install_github("GreenleafLab/motifmatchr"))'
+
 # create local R library
 RUN Rscript -e 'dir.create(path = Sys.getenv("R_LIBS_USER"), showWarnings = FALSE, recursive = TRUE)'
 RUN Rscript -e '.libPaths( c( Sys.getenv("R_LIBS_USER"), .libPaths() ) )'
@@ -169,7 +183,10 @@ RUN pip install tzlocal
 RUN pip install scvelo
 # scanorama
 RUN git clone https://github.com/brianhie/scanorama.git
-RUN cd scanorama/ && python setup.py install --user
+RUN cd scanorama/ && python setup.py install
+
+# leidenalg
+RUN pip install leidenalg
 
 # necessary for creating user environments
 RUN conda install --quiet --yes nb_conda_kernels
