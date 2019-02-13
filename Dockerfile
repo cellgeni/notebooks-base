@@ -145,6 +145,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-cran-tidyr \
     r-cran-withr \
     r-cran-magrittr \
+    r-cran-rmpi \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -156,7 +157,7 @@ RUN Rscript -e 'install.packages(c("Seurat", "vcfR", "rJava", "gProfileR"))'
 # Install Bioconductor packages
 RUN echo 'source("https://bioconductor.org/biocLite.R")' > /opt/bioconductor.r && \
     echo 'biocLite()' >> /opt/bioconductor.r && \
-    echo 'biocLite(c("graph", "RBGL", "gtools", "xtable", "pcaMethods", "limma", "SingleCellExperiment", "Rhdf5lib", "beachmat", "scater", "scran", "RUVSeq", "sva", "SC3", "TSCAN", "monocle", "destiny", "DESeq2", "edgeR", "MAST", "scfind", "scmap", "BiocParallel", "zinbwave", "GenomicAlignments", "RSAMtools", "M3Drop", "DropletUtils", "switchde", "biomaRt", "org.Hs.eg.db", "goseq"))' >> /opt/bioconductor.r && \
+    echo 'biocLite(c("graph", "RBGL", "gtools", "xtable", "pcaMethods", "limma", "SingleCellExperiment", "Rhdf5lib", "beachmat", "scater", "scran", "RUVSeq", "sva", "SC3", "TSCAN", "monocle", "destiny", "DESeq2", "edgeR", "MAST", "scfind", "scmap", "BiocParallel", "zinbwave", "GenomicAlignments", "RSAMtools", "M3Drop", "DropletUtils", "switchde", "biomaRt", "org.Hs.eg.db", "goseq", "ccfindR"))' >> /opt/bioconductor.r && \
     Rscript /opt/bioconductor.r
 
 # Install Vennerable for Venn diagrams
