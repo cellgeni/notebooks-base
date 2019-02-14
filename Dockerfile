@@ -171,22 +171,12 @@ RUN Rscript -e 'withr::with_libpaths(new = "/usr/lib/R/site-library/", devtools:
 RUN Rscript -e 'dir.create(path = Sys.getenv("R_LIBS_USER"), showWarnings = FALSE, recursive = TRUE)'
 RUN Rscript -e '.libPaths( c( Sys.getenv("R_LIBS_USER"), .libPaths() ) )'
 
-# Install scanpy
-RUN pip install scanpy python-igraph louvain
+# Install scanpy and other python packages
+RUN pip install scanpy python-igraph louvain bbknn rpy2 tzlocal scvelo leidenalg
 
-# Install other python packages
-# bbknn
-RUN pip install bbknn
-RUN pip install rpy2
-RUN pip install tzlocal
-# scvelo
-RUN pip install scvelo
 # scanorama
 RUN git clone https://github.com/brianhie/scanorama.git
 RUN cd scanorama/ && python setup.py install
-
-# leidenalg
-RUN pip install leidenalg
 
 # necessary for creating user environments
 RUN conda install --quiet --yes nb_conda_kernels
