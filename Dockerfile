@@ -153,10 +153,10 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 # Install hdf5r for Seurat
 RUN Rscript -e 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5cc")'
 # Install other CRAN
-RUN Rscript -e 'install.packages(c("Seurat", "vcfR", "rJava", "gProfileR"))'
+RUN Rscript -e 'install.packages(c("Seurat", "vcfR", "rJava", "gProfileR", "umap"))'
 
 # Install Bioconductor packages
-RUN Rscript -e 'BiocManager::install(c("graph", "RBGL", "gtools", "xtable", "pcaMethods", "limma", "SingleCellExperiment", "Rhdf5lib", "beachmat", "scater", "scran", "RUVSeq", "sva", "SC3", "TSCAN", "monocle", "destiny", "DESeq2", "edgeR", "MAST", "scfind", "scmap", "BiocParallel", "zinbwave", "GenomicAlignments", "RSAMtools", "M3Drop", "DropletUtils", "switchde", "biomaRt", "org.Hs.eg.db", "goseq", "ccfindR"), version = "3.8")'
+RUN Rscript -e 'BiocManager::install(c("graph", "RBGL", "gtools", "xtable", "pcaMethods", "limma", "SingleCellExperiment", "Rhdf5lib", "beachmat", "scater", "scran", "RUVSeq", "sva", "SC3", "TSCAN", "monocle", "destiny", "DESeq2", "edgeR", "MAST", "scfind", "scmap", "BiocParallel", "GenomicAlignments", "RSAMtools", "M3Drop", "DropletUtils", "switchde", "biomaRt", "goseq"), version = "3.8")'
 
 # Install Vennerable for Venn diagrams
 RUN Rscript -e 'install.packages("Vennerable", repos="http://R-Forge.R-project.org")'
@@ -165,7 +165,7 @@ RUN Rscript -e 'install.packages("Vennerable", repos="http://R-Forge.R-project.o
 # see here for with_libpaths description:
 # https://stackoverflow.com/questions/24646065/how-to-specify-lib-directory-when-installing-development-version-r-packages-from
 # (do not install anything in the home directory, it will be wiped out when a volume is mounted to the docker container)
-RUN Rscript -e 'withr::with_libpaths(new = "/usr/lib/R/site-library/", devtools::install_github(c("GreenleafLab/motifmatchr", "immunogenomics/harmony")))'
+RUN Rscript -e 'withr::with_libpaths(new = "/usr/lib/R/site-library/", devtools::install_github(c("immunogenomics/harmony", "MarioniLab/DropletUtils")))'
 
 # create local R library
 RUN Rscript -e 'dir.create(path = Sys.getenv("R_LIBS_USER"), showWarnings = FALSE, recursive = TRUE)'
