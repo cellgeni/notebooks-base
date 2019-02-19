@@ -1,5 +1,5 @@
 # Distributed under the terms of the Modified BSD License.
-FROM jupyter/scipy-notebook
+FROM jupyter/base-notebook
 
 USER root
 
@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     curl \
     less \
     gcc \
+    g++ \
     clang-6.0 \
     openssh-client \
     openssh-server \
@@ -43,6 +44,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libigraph0-dev \
     libreadline-dev \
     libblas-dev \
+    git \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -147,7 +149,8 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-cran-magrittr \
     r-cran-rmpi \
     r-cran-biocmanager \
-    && apt-get clean && \
+    && apt-get clean \
+    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
     rm -rf /var/lib/apt/lists/*
 
 # Install hdf5r for Seurat
