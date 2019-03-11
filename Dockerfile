@@ -179,6 +179,10 @@ RUN Rscript -e '.libPaths( c( Sys.getenv("R_LIBS_USER"), .libPaths() ) )'
 # Install scanpy and other python packages
 RUN pip install scanpy python-igraph louvain bbknn rpy2 tzlocal scvelo leidenalg
 
+# Try to fix rpy2 problems
+# https://stackoverflow.com/questions/54904223/importing-rds-files-in-python-to-be-read-as-a-dataframe
+RUN pip install --upgrade rpy2 pandas
+
 # scanorama
 RUN git clone https://github.com/brianhie/scanorama.git
 RUN cd scanorama/ && python setup.py install
