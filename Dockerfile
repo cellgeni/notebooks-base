@@ -29,6 +29,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libapparmor1 \
     libedit2 \
     libhdf5-dev \
+    libclang-dev \
     lsb-release \
     psmisc \
     rsync \
