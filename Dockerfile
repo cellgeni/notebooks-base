@@ -48,6 +48,9 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libtiff5-dev \
     fftw3-dev \
     git \
+    hdf5-tools \
+    libffi-dev \
+    gettext \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -243,6 +246,7 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     julia -e 'import Pkg; Pkg.add("GLM")' && \
     julia -e 'import Pkg; Pkg.add("LsqFit")' && \
     julia -e 'import Pkg; Pkg.add("Combinatorics")' \
+    julia -e 'import Pkg; Pkg.add("Cairo")' \
     # Precompile Julia packages \
     julia -e 'using IJulia'
 
