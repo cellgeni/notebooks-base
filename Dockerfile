@@ -61,7 +61,7 @@ RUN update-alternatives --install /etc/alternatives/libblas.so.3-x86_64-linux-gn
 
 # RStudio
 ENV RSTUDIO_PKG=rstudio-server-1.1.463-amd64.deb
-RUN wget -q http://download2.rstudio.org/server/trusty/amd64/${RSTUDIO_PKG}
+RUN wget -q http://download2.rstudio.org/${RSTUDIO_PKG}
 RUN dpkg -i ${RSTUDIO_PKG}
 RUN rm ${RSTUDIO_PKG}
 # The desktop package uses /usr/lib/rstudio/bin
