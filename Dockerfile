@@ -48,10 +48,12 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     libtiff5-dev \
     fftw3-dev \
     git \
+    texlive-xetex \
     hdf5-tools \
     libffi-dev \
     gettext \
     libpng-dev \
+    libpixman-1-0 \ 
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -192,7 +194,7 @@ RUN pip install --upgrade rpy2 pandas
 RUN git clone https://github.com/brianhie/scanorama.git
 RUN cd scanorama/ && python setup.py install
 
-# necessary for creating user environments
+# necessary for creating user environments 
 RUN conda install --quiet --yes nb_conda_kernels
 
 # Julia dependencies
