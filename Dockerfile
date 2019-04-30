@@ -84,6 +84,7 @@ RUN add-apt-repository ppa:marutter/c2d4u3.5
 # Install CRAN binaries from ubuntu
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-base=3.5.3-1bionic \
+    r-recommended=3.5.3-1bionic \
     r-cran-devtools \
     r-cran-tidyverse \
     r-cran-pheatmap \
