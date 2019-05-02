@@ -83,9 +83,9 @@ RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sud
 # RUN add-apt-repository ppa:marutter/c2d4u3.5
 # # Install CRAN binaries from ubuntu
 RUN apt-get update && apt-get install -yq --no-install-recommends \
-    r-base=3.5.3-1bionic \
-    r-recommended=3.5.3-1bionic \
-    r-base-core=3.5.3-1bionic \
+    r-base \
+    # r-recommended=3.5.3-1bionic \
+    # r-base-core=3.5.3-1bionic \
     # r-cran-httpuv \
     # r-cran-xtable \
     # r-cran-sourcetools \
@@ -109,7 +109,7 @@ RUN Rscript -e 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5
 RUN Rscript -e 'install.packages(c("devtools", "ggplot2", "BiocManager", "Seurat", "vcfR", "rJava", "gProfileR", "umap"))'
 
 # Install Bioconductor packages
-RUN Rscript -e 'BiocManager::install(c("graph", "RBGL", "gtools", "xtable", "pcaMethods", "limma", "SingleCellExperiment", "Rhdf5lib", "scater", "scran", "RUVSeq", "sva", "SC3", "TSCAN", "monocle", "destiny", "DESeq2", "edgeR", "MAST", "scfind", "scmap", "BiocParallel", "GenomicAlignments", "RSAMtools", "switchde", "biomaRt", "goseq"), version = "3.8")'
+RUN Rscript -e 'BiocManager::install(c("graph", "RBGL", "gtools", "xtable", "pcaMethods", "limma", "SingleCellExperiment",  "Rhdf5lib", "scater", "scran", "RUVSeq", "sva", "SC3", "TSCAN", "monocle", "destiny", "DESeq2", "edgeR", "MAST", "scfind", "scmap", "BiocParallel", "GenomicAlignments", "RSAMtools", "switchde", "biomaRt", "goseq"))'
 
 # Install Vennerable for Venn diagrams
 RUN Rscript -e 'install.packages("Vennerable", repos="http://R-Forge.R-project.org")'
