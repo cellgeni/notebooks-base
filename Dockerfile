@@ -74,92 +74,31 @@ ENV LD_LIBRARY_PATH="/usr/lib/R/lib:/lib:/usr/lib/x86_64-linux-gnu:/usr/lib/jvm/
 # jupyter-rsession-proxy extension
 RUN pip install git+https://github.com/jupyterhub/jupyter-rsession-proxy
 
-# R packages
-# https://askubuntu.com/questions/610449/w-gpg-error-the-following-signatures-couldnt-be-verified-because-the-public-k
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
-# https://cran.r-project.org/bin/linux/ubuntu/README.html
-RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sudo tee -a /etc/apt/sources.list
-# https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5
-RUN add-apt-repository ppa:marutter/c2d4u3.5
-# Install CRAN binaries from ubuntu
+# # R packages
+# # https://askubuntu.com/questions/610449/w-gpg-error-the-following-signatures-couldnt-be-verified-because-the-public-k
+# RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+# # https://cran.r-project.org/bin/linux/ubuntu/README.html
+# RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sudo tee -a /etc/apt/sources.list
+# # https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5
+# RUN add-apt-repository ppa:marutter/c2d4u3.5
+# # Install CRAN binaries from ubuntu
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     r-base=3.5.3-1bionic \
     r-recommended=3.5.3-1bionic \
     r-base-core=3.5.3-1bionic \
-    r-cran-devtools \
-    r-cran-tidyverse \
-    r-cran-pheatmap \
-    r-cran-plyr \
-    r-cran-dplyr \
-    r-cran-readr \
-    r-cran-reshape \
-    r-cran-reshape2 \
-    r-cran-reticulate \
-    r-cran-viridis \
-    r-cran-ggplot2 \
-    r-cran-ggthemes \
-    r-cran-cowplot \
-    r-cran-ggforce \
-    r-cran-ggridges \
-    r-cran-ggrepel \
-    r-cran-gplots \
-    r-cran-igraph \
-    r-cran-car \
-    r-cran-ggpubr \
-    r-cran-httpuv \
-    r-cran-xtable \
-    r-cran-sourcetools \
-    r-cran-modeltools \
-    r-cran-R.oo \
-    r-cran-R.methodsS3 \
-    r-cran-shiny \
-    r-cran-later \
-    r-cran-checkmate \
-    r-cran-bibtex \
-    r-cran-lsei \
-    r-cran-bit \
-    r-cran-segmented \
-    r-cran-mclust \
-    r-cran-flexmix \
-    r-cran-prabclus \
-    r-cran-diptest \
-    r-cran-mvtnorm \
-    r-cran-robustbase \
-    r-cran-kernlab \
-    r-cran-trimcluster \
-    r-cran-proxy \
-    r-cran-R.utils \
-    r-cran-htmlwidgets \
-    r-cran-hexbin \
-    r-cran-crosstalk \
-    r-cran-promises \
-    r-cran-acepack \
-    r-cran-zoo \
-    r-cran-npsurv \
-    r-cran-iterators \
-    r-cran-snow \
-    r-cran-bit64 \
-    r-cran-permute \
-    r-cran-mixtools \
-    r-cran-lars \
-    r-cran-ica \
-    r-cran-fpc \
-    r-cran-ape \
-    r-cran-pbapply \
-    r-cran-irlba \
-    r-cran-dtw \
-    r-cran-plotly \
-    r-cran-metap \
-    r-cran-lmtest \
-    r-cran-fitdistrplus \
-    r-cran-png \
-    r-cran-foreach \
-    r-cran-vegan \
-    r-cran-tidyr \
-    r-cran-withr \
-    r-cran-magrittr \
-    r-cran-rmpi \
-    r-cran-biocmanager \
+    # r-cran-httpuv \
+    # r-cran-xtable \
+    # r-cran-sourcetools \
+    # r-cran-modeltools \
+    # r-cran-R.oo \
+    # r-cran-R.methodsS3 \
+    # r-cran-proxy \
+    # r-cran-R.utils \
+    # r-cran-bit64 \
+    # r-cran-metap \
+    # r-cran-withr \
+    # r-cran-magrittr \
+    # r-cran-rmpi \
     && apt-get clean \
     && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
     rm -rf /var/lib/apt/lists/*
@@ -167,7 +106,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 # Install hdf5r for Seurat
 RUN Rscript -e 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5cc")'
 # Install other CRAN
-RUN Rscript -e 'install.packages(c("Seurat", "vcfR", "rJava", "gProfileR", "umap"))'
+RUN Rscript -e 'install.packages(c("devtools", "ggplot2", "biocmanager", "Seurat", "vcfR", "rJava", "gProfileR", "umap"))'
 
 # Install Bioconductor packages
 RUN Rscript -e 'BiocManager::install(c("graph", "RBGL", "gtools", "xtable", "pcaMethods", "limma", "SingleCellExperiment", "Rhdf5lib", "scater", "scran", "RUVSeq", "sva", "SC3", "TSCAN", "monocle", "destiny", "DESeq2", "edgeR", "MAST", "scfind", "scmap", "BiocParallel", "GenomicAlignments", "RSAMtools", "switchde", "biomaRt", "goseq"), version = "3.8")'
