@@ -106,7 +106,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 # Install hdf5r for Seurat
 RUN Rscript -e 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5cc")'
 # Install other CRAN
-RUN Rscript -e 'install.packages(c("devtools", "ggplot2", "biocmanager", "Seurat", "vcfR", "rJava", "gProfileR", "umap"))'
+RUN Rscript -e 'install.packages(c("devtools", "ggplot2", "BiocManager", "Seurat", "vcfR", "rJava", "gProfileR", "umap"))'
 
 # Install Bioconductor packages
 RUN Rscript -e 'BiocManager::install(c("graph", "RBGL", "gtools", "xtable", "pcaMethods", "limma", "SingleCellExperiment", "Rhdf5lib", "scater", "scran", "RUVSeq", "sva", "SC3", "TSCAN", "monocle", "destiny", "DESeq2", "edgeR", "MAST", "scfind", "scmap", "BiocParallel", "GenomicAlignments", "RSAMtools", "switchde", "biomaRt", "goseq"), version = "3.8")'
