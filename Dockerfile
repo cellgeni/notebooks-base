@@ -64,8 +64,8 @@ RUN pip install simplegeneric
 RUN update-alternatives --install /etc/alternatives/libblas.so.3-x86_64-linux-gnu libblas /usr/lib/x86_64-linux-gnu/blas/libblas.so.3 5
 
 # RStudio
-ENV RSTUDIO_PKG=rstudio-server-1.2.1335-amd64.deb
-RUN wget -q http://download2.rstudio.org/server/bionic/amd64/${RSTUDIO_PKG}
+ENV RSTUDIO_PKG=rstudio-server-1.1.463-amd64.deb
+RUN wget -q http://download2.rstudio.org/${RSTUDIO_PKG}
 RUN dpkg -i ${RSTUDIO_PKG}
 RUN rm ${RSTUDIO_PKG}
 # The desktop package uses /usr/lib/rstudio/bin
@@ -94,16 +94,16 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
 # Install hdf5r for Seurat
 RUN Rscript -e 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5cc")'
 # Install other CRAN
-RUN Rscript -e 'install.packages(c("devtools", "ggplot2", "BiocManager", "Seurat", "rJava"))'
+# RUN Rscript -e 'install.packages(c("devtools", "ggplot2", "BiocManager", "Seurat", "rJava"))'
 # Install Bioconductor packages
-RUN Rscript -e 'BiocManager::install(c("SingleCellExperiment",  "Rhdf5lib", "scater", "scran", "monocle", "DESeq2"))'
+# RUN Rscript -e 'BiocManager::install(c("SingleCellExperiment",  "Rhdf5lib", "scater", "scran", "monocle", "DESeq2"))'
 # Install Vennerable for Venn diagrams
 # RUN Rscript -e 'install.packages("Vennerable", repos="http://R-Forge.R-project.org")'
 # install github packages
 # see here for with_libpaths description:
 # https://stackoverflow.com/questions/24646065/how-to-specify-lib-directory-when-installing-development-version-r-packages-from
 # (do not install anything in the home directory, it will be wiped out when a volume is mounted to the docker container)
-RUN Rscript -e 'withr::with_libpaths(new = "/usr/lib/R/site-library/", devtools::install_github(c("immunogenomics/harmony", "LTLA/beachmat", "MarioniLab/DropletUtils")))'
+# RUN Rscript -e 'withr::with_libpaths(new = "/usr/lib/R/site-library/", devtools::install_github(c("immunogenomics/harmony", "LTLA/beachmat", "MarioniLab/DropletUtils")))'
 # create local R library
 RUN Rscript -e 'dir.create(path = Sys.getenv("R_LIBS_USER"), showWarnings = FALSE, recursive = TRUE)'
 RUN Rscript -e '.libPaths( c( Sys.getenv("R_LIBS_USER"), .libPaths() ) )'
@@ -160,22 +160,22 @@ USER $NB_UID
 # to the system share location. Avoids problems with runtime UID change not
 # taking effect properly on the .local folder in the jovyan home dir.
 RUN julia -e 'import Pkg; Pkg.update()' && \
-    (test $TEST_ONLY_BUILD || julia -e 'import Pkg; Pkg.add("HDF5")') && \
-    julia -e 'import Pkg; Pkg.add("Gadfly")' && \
-    julia -e 'import Pkg; Pkg.add("RDatasets")' && \
-    julia -e 'import Pkg; Pkg.add("IJulia")' && \
-    julia -e 'import Pkg; Pkg.add("Distances")' && \
-    julia -e 'import Pkg; Pkg.add("StatsBase")' && \
-    julia -e 'import Pkg; Pkg.add("Hadamard")' && \
-    julia -e 'import Pkg; Pkg.add("JLD")' && \
-    julia -e 'import Pkg; Pkg.add("StatsBase")' && \
-    julia -e 'import Pkg; Pkg.add("Statistics")' && \
-    julia -e 'import Pkg; Pkg.add("Embeddings")' && \
-    julia -e 'import Pkg; Pkg.add("DataFrames")' && \
-    julia -e 'import Pkg; Pkg.add("GLM")' && \
-    julia -e 'import Pkg; Pkg.add("LsqFit")' && \
-    julia -e 'import Pkg; Pkg.add("Combinatorics")' && \
-    julia -e 'import Pkg; Pkg.add("Cairo")' && \
+    # (test $TEST_ONLY_BUILD || julia -e 'import Pkg; Pkg.add("HDF5")') && \
+    # julia -e 'import Pkg; Pkg.add("Gadfly")' && \
+    # julia -e 'import Pkg; Pkg.add("RDatasets")' && \
+    # julia -e 'import Pkg; Pkg.add("IJulia")' && \
+    # julia -e 'import Pkg; Pkg.add("Distances")' && \
+    # julia -e 'import Pkg; Pkg.add("StatsBase")' && \
+    # julia -e 'import Pkg; Pkg.add("Hadamard")' && \
+    # julia -e 'import Pkg; Pkg.add("JLD")' && \
+    # julia -e 'import Pkg; Pkg.add("StatsBase")' && \
+    # julia -e 'import Pkg; Pkg.add("Statistics")' && \
+    # julia -e 'import Pkg; Pkg.add("Embeddings")' && \
+    # julia -e 'import Pkg; Pkg.add("DataFrames")' && \
+    # julia -e 'import Pkg; Pkg.add("GLM")' && \
+    # julia -e 'import Pkg; Pkg.add("LsqFit")' && \
+    # julia -e 'import Pkg; Pkg.add("Combinatorics")' && \
+    # julia -e 'import Pkg; Pkg.add("Cairo")' && \
     # Precompile Julia packages \
     julia -e 'using IJulia'
 
