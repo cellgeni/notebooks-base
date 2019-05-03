@@ -3,7 +3,16 @@ FROM jupyter/base-notebook
 
 USER root
 
-# pre-requisites
+# GENERAL PACKAGES
+
+# This is needed for R:
+# https://askubuntu.com/questions/610449/w-gpg-error-the-following-signatures-couldnt-be-verified-because-the-public-k
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+# https://cran.r-project.org/bin/linux/ubuntu/README.html
+RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sudo tee -a /etc/apt/sources.list
+# This is needed for pre-compiled R packages:
+# https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5
+RUN add-apt-repository ppa:marutter/c2d4u3.5
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     python3-software-properties \
     software-properties-common \
@@ -54,6 +63,7 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     gettext \
     libpng-dev \
     libpixman-1-0 \ 
+    r-base \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -63,8 +73,8 @@ RUN pip install simplegeneric
 RUN update-alternatives --install /etc/alternatives/libblas.so.3-x86_64-linux-gnu libblas /usr/lib/x86_64-linux-gnu/blas/libblas.so.3 5
 
 # RStudio
-ENV RSTUDIO_PKG=rstudio-server-1.1.463-amd64.deb
-RUN wget -q http://download2.rstudio.org/${RSTUDIO_PKG}
+ENV RSTUDIO_PKG=rstudio-server-1.2.1335-amd64.deb
+RUN wget -q http://download2.rstudio.org/server/bionic/amd64/${RSTUDIO_PKG}
 RUN dpkg -i ${RSTUDIO_PKG}
 RUN rm ${RSTUDIO_PKG}
 # The desktop package uses /usr/lib/rstudio/bin
@@ -74,69 +84,39 @@ ENV LD_LIBRARY_PATH="/usr/lib/R/lib:/lib:/usr/lib/x86_64-linux-gnu:/usr/lib/jvm/
 # jupyter-rsession-proxy extension
 RUN pip install git+https://github.com/jupyterhub/jupyter-rsession-proxy
 
-# R packages
-# https://askubuntu.com/questions/610449/w-gpg-error-the-following-signatures-couldnt-be-verified-because-the-public-k
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
-# https://cran.r-project.org/bin/linux/ubuntu/README.html
-RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sudo tee -a /etc/apt/sources.list
-# # https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5
-# RUN add-apt-repository ppa:marutter/c2d4u3.5
-# # Install CRAN binaries from ubuntu
-RUN apt-get update && apt-get install -yq --no-install-recommends \
-    r-base \
-    # r-recommended=3.5.3-1bionic \
-    # r-base-core=3.5.3-1bionic \
-    # r-cran-httpuv \
-    # r-cran-xtable \
-    # r-cran-sourcetools \
-    # r-cran-modeltools \
-    # r-cran-R.oo \
-    # r-cran-R.methodsS3 \
-    # r-cran-proxy \
-    # r-cran-R.utils \
-    # r-cran-bit64 \
-    # r-cran-metap \
-    # r-cran-withr \
-    # r-cran-magrittr \
-    # r-cran-rmpi \
-    && apt-get clean \
-    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
-    rm -rf /var/lib/apt/lists/*
+# R PACKAGES
 
 # Install hdf5r for Seurat
 RUN Rscript -e 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5cc")'
 # Install other CRAN
-RUN Rscript -e 'install.packages(c("devtools", "ggplot2", "BiocManager", "Seurat", "vcfR", "rJava", "gProfileR", "umap"))'
-
+RUN Rscript -e 'install.packages(c("devtools", "ggplot2", "BiocManager", "Seurat", "rJava"))'
 # Install Bioconductor packages
-RUN Rscript -e 'BiocManager::install(c("graph", "RBGL", "gtools", "xtable", "pcaMethods", "limma", "SingleCellExperiment",  "Rhdf5lib", "scater", "scran", "RUVSeq", "sva", "SC3", "TSCAN", "monocle", "destiny", "DESeq2", "edgeR", "MAST", "scfind", "scmap", "BiocParallel", "GenomicAlignments", "RSAMtools", "switchde", "biomaRt", "goseq"))'
-
+RUN Rscript -e 'BiocManager::install(c("SingleCellExperiment",  "Rhdf5lib", "scater", "scran", "monocle", "DESeq2"))'
 # Install Vennerable for Venn diagrams
-RUN Rscript -e 'install.packages("Vennerable", repos="http://R-Forge.R-project.org")'
-
+# RUN Rscript -e 'install.packages("Vennerable", repos="http://R-Forge.R-project.org")'
 # install github packages
 # see here for with_libpaths description:
 # https://stackoverflow.com/questions/24646065/how-to-specify-lib-directory-when-installing-development-version-r-packages-from
 # (do not install anything in the home directory, it will be wiped out when a volume is mounted to the docker container)
-RUN Rscript -e 'withr::with_libpaths(new = "/usr/lib/R/site-library/", devtools::install_github(c("immunogenomics/harmony", "LTLA/beachmat", "MarioniLab/DropletUtils", "tallulandrews/M3Drop")))'
-
+RUN Rscript -e 'withr::with_libpaths(new = "/usr/lib/R/site-library/", devtools::install_github(c("immunogenomics/harmony", "LTLA/beachmat", "MarioniLab/DropletUtils")))'
 # create local R library
 RUN Rscript -e 'dir.create(path = Sys.getenv("R_LIBS_USER"), showWarnings = FALSE, recursive = TRUE)'
 RUN Rscript -e '.libPaths( c( Sys.getenv("R_LIBS_USER"), .libPaths() ) )'
 
+# PYTHON PACKAGES
+
 # Install scanpy and other python packages
 RUN pip install scanpy python-igraph louvain bbknn rpy2 tzlocal scvelo leidenalg
-
 # Try to fix rpy2 problems
 # https://stackoverflow.com/questions/54904223/importing-rds-files-in-python-to-be-read-as-a-dataframe
 RUN pip install --upgrade rpy2 pandas
-
 # scanorama
 RUN git clone https://github.com/brianhie/scanorama.git
 RUN cd scanorama/ && python setup.py install
-
 # necessary for creating user environments 
 RUN conda install --quiet --yes nb_conda_kernels
+
+# JULIA PACKAGES
 
 # Julia dependencies
 # install Julia packages in /opt/julia instead of $HOME
@@ -194,7 +174,6 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     # Precompile Julia packages \
     julia -e 'using IJulia'
 
-
 USER root
 
 # move kernelspec out of home
@@ -203,7 +182,8 @@ RUN mv $HOME/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernel
     rm -rf $HOME/.local && \
     fix-permissions $JULIA_PKGDIR $CONDA_DIR/share/jupyter
 
+# MAKE DEFAULT USER SUDO
+
 # give jovyan sudo permissions
 RUN sed -i -e "s/Defaults    requiretty.*/ #Defaults    requiretty/g" /etc/sudoers
-
 RUN echo "jovyan ALL= (ALL) NOPASSWD: ALL" >> /etc/sudoers.d/jovyan
