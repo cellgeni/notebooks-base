@@ -5,14 +5,6 @@ USER root
 
 # GENERAL PACKAGES
 
-# This is needed for R:
-# https://askubuntu.com/questions/610449/w-gpg-error-the-following-signatures-couldnt-be-verified-because-the-public-k
-RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
-# https://cran.r-project.org/bin/linux/ubuntu/README.html
-RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sudo tee -a /etc/apt/sources.list
-# This is needed for pre-compiled R packages:
-# https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5
-RUN add-apt-repository ppa:marutter/c2d4u3.5
 RUN apt-get update && apt-get install -yq --no-install-recommends \
     python3-software-properties \
     software-properties-common \
@@ -63,7 +55,6 @@ RUN apt-get update && apt-get install -yq --no-install-recommends \
     gettext \
     libpng-dev \
     libpixman-1-0 \ 
-    r-base \
     && apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -86,6 +77,20 @@ RUN pip install git+https://github.com/jupyterhub/jupyter-rsession-proxy
 
 # R PACKAGES
 
+# R
+# https://askubuntu.com/questions/610449/w-gpg-error-the-following-signatures-couldnt-be-verified-because-the-public-k
+RUN apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E084DAB9
+# https://cran.r-project.org/bin/linux/ubuntu/README.html
+RUN echo "deb https://cloud.r-project.org/bin/linux/ubuntu bionic-cran35/" | sudo tee -a /etc/apt/sources.list
+# https://launchpad.net/~marutter/+archive/ubuntu/c2d4u3.5
+RUN add-apt-repository ppa:marutter/c2d4u3.5
+# Install CRAN binaries from ubuntu
+RUN apt-get update && apt-get install -yq --no-install-recommends \
+    r-base \
+    # r-cran-httpuv \
+    && apt-get clean \
+    && rm -rf /tmp/downloaded_packages/ /tmp/*.rds \
+    rm -rf /var/lib/apt/lists/*
 # Install hdf5r for Seurat
 RUN Rscript -e 'install.packages("hdf5r",configure.args="--with-hdf5=/usr/bin/h5cc")'
 # Install other CRAN
