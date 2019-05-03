@@ -163,7 +163,7 @@ RUN julia -e 'import Pkg; Pkg.update()' && \
     # (test $TEST_ONLY_BUILD || julia -e 'import Pkg; Pkg.add("HDF5")') && \
     # julia -e 'import Pkg; Pkg.add("Gadfly")' && \
     # julia -e 'import Pkg; Pkg.add("RDatasets")' && \
-    # julia -e 'import Pkg; Pkg.add("IJulia")' && \
+    julia -e 'import Pkg; Pkg.add("IJulia")' && \
     # julia -e 'import Pkg; Pkg.add("Distances")' && \
     # julia -e 'import Pkg; Pkg.add("StatsBase")' && \
     # julia -e 'import Pkg; Pkg.add("Hadamard")' && \
